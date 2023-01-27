@@ -1,16 +1,16 @@
 const db = require('../models');
-const things = db.things;
+const tables = db.tables;
 
-// Create and Save a new thing
-exports.addSomeThing = (req, res) => {
-    const thing = new things(req.body);
+// Create and Save a new table
+exports.addOneTable = (req, res) => {
+    const table = new tables(req.body);
     try {
-        thing.save()
+        table.save()
         .then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not add the thing');
+                res.status(400).send('❎ Could not add the table');
             }
         });
     } catch (err) {
@@ -18,14 +18,14 @@ exports.addSomeThing = (req, res) => {
     }
 };
 
-// Retrieve all things from the database
-exports.findAllThings = (req, res) => {
+// Retrieve all tables from the database
+exports.findAllTables = (req, res) => {
     try {
-        things.find().then(result => {
+        tables.find().then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ No things to show');
+                res.status(400).send('❎ No tables to show');
             }
         });
     } catch (err) {
@@ -33,14 +33,14 @@ exports.findAllThings = (req, res) => {
     }
 };
 
-// Find a single thing with an id
-exports.findOneThing = (req, res) => {
+// Find a single table with an id in the request
+exports.findOneTable = (req, res) => {
     try {
-        things.findById(req.params.id).then(result => {
+        tables.find({ "id": req.params.id }).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not find the thing');
+                res.status(400).send('❎ Could not find the table');
             }
         });
     } catch (err) {
@@ -48,14 +48,14 @@ exports.findOneThing = (req, res) => {
     }
 };
 
-// Update a thing by the id in the request
-exports.updateOneThing = (req, res) => {
+// Update a table by the id in the request
+exports.updateOneTable = (req, res) => {
     try {
-        things.findByIdAndUpdate(req.params.id, req.body).then(result => {
+        tables.findOneAndUpdate({ "id": req.params.id }, req.body).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not update the thing');
+                res.status(400).send('❎ Could not update the table');
             }
         });
     } catch (err) {
@@ -63,14 +63,14 @@ exports.updateOneThing = (req, res) => {
     }
 };
 
-// Delete a thing with the specified id in the request
-exports.deleteOneThing = (req, res) => {
+// Delete a table with the specified id in the request
+exports.deleteOneTable = (req, res) => {
     try {
-        things.findByIdAndDelete(req.params.id).then(result => {
+        tables.findOneAndDelete({ "id": req.params.id }).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not delete the thing');
+                res.status(400).send('❎ Could not delete the table');
             }
         });
     } catch (err) {
@@ -78,16 +78,16 @@ exports.deleteOneThing = (req, res) => {
     }
 };
 
-// Delete all things from the database
-exports.deleteAllThings = (req, res) => {
+// Delete all tables from the database
+exports.deleteAllTables = (req, res) => {
     try {
-        things.deleteMany().then(result => {
+        tables.deleteMany().then(result => {
             if (result.length != 0) {
                 if (result.acknowledged === true) {
                     res.status(200).send(result);
                 }
             } else {
-                res.status(400).send('❎ Could not delete the thing');
+                res.status(400).send('❎ Could not delete the table');
             }
         });
     } catch (err) {

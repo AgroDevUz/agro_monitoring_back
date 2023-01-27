@@ -1,5 +1,5 @@
 require('dotenv').config();
 
 module.exports = {
-    url: process.env['db_URL']
+    url: process.env['db_url']
 };

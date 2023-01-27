@@ -7,6 +7,6 @@ const db = {};
 
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.things = require("./thing.model.js");
+db.tables = require("./excel.model.js");
 
 module.exports = db;

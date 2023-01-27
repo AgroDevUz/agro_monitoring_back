@@ -2,17 +2,25 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./app/models/index.js");
+const morgan = require('morgan')
 
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const controllers = require('./app/controllers/sample.controller');
+const controllers = require('./app/controllers/table.controller');
 
 const app = express();
 var corsOptions = {
-  origin: '*'
+  origin: process.env.front_end_url
 };
 app.use(cors(corsOptions));
+
+// set up route logger tools
+app.use(morgan('dev'));
+app.use((req, res, next) => {
+  console.log(`${Date(Date.now())}`);
+  next();
+})
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -26,28 +34,28 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/get-all-things", (req, res) => {
-  controllers.findAllThings(req, res);
+app.get("/get-all-tables", (req, res) => {
+  controllers.findAllTables(req, res);
 });
  
-app.get("/get-thing/:id", (req, res) => {
-  controllers.findOneThing(req, res);
+app.get("/get-table/:id", (req, res) => {
+  controllers.findOneTable(req, res);
 });
 
-app.post('/add-thing', (req, res) => {
-  controllers.addOneThing(req, res);
+app.post('/add-table', (req, res) => {
+  controllers.addOneTable(req, res);
 });
 
-app.post("/update-thing/:id", (req, res) => {
-  controllers.updateOneThing(req, res);
+app.post("/update-table/:id", (req, res) => {
+  controllers.updateOneTable(req, res);
 });
 
-app.post("/delete-thing/:id", (req, res) => {
-  controllers.deleteOneThing(req, res);
+app.post("/delete-table/:id", (req, res) => {
+  controllers.deleteOneTable(req, res);
 });
 
-app.post("/delete-all-things", (req, res) => {
-  controllers.deleteAllThings(req, res);
+app.post("/delete-all-tables", (req, res) => {
+  controllers.deleteAllTables(req, res);
 });
 
 // set port, listen for requests
