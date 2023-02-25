@@ -2,12 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./app/models/index.js");
-const morgan = require('morgan')
+const morgan = require("morgan");
+
+// const fs = require("fs");
+// const readXlsxFile = require("read-excel-file/node");
+// const axios = require("axios");
 
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const controllers = require('./app/controllers/table.controller');
+const controllers = require("./app/controllers/table.controller");
 
 const app = express();
 var corsOptions = {
@@ -16,7 +20,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // set up route logger tools
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use((req, res, next) => {
   console.log(`${Date(Date.now())}`);
   next();
@@ -28,35 +32,74 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// const files = fs.readdirSync("./app/data/tables", (err) => {
+//   if (err) throw err;
+// });
+
+// const table_files = [];
+// for (let x = 1; x < files.length; x++) {
+//   if (x != 5 && x != 18) {
+//     table_files[x] = (fs.readdirSync("./app/data/tables/" + x, (err) => {
+//       if(err) throw err
+//     }));
+//   }
+// }
+
+// const tables = [];
+// const func = async () => {
+//   for (let x = 1; x < files.length; x++) {
+//     if (x != 5 && x != 18) {
+//       for (let y in table_files[x]) {
+//         await tables.push({
+//           "name": table_files[x][y].split(".xlsx")[0],
+//           "tables": await readXlsxFile(fs.readFileSync("./app/data/tables/" + x + "/" + table_files[x][y]))
+//           .then(async rows => {
+//             return rows;
+//           }),
+//           "parent": x,
+//         })
+//       }
+//     }
+//   }
+// };
+
+// const start = () => {
+//   return func();
+// }
+
 app.get("/", (req, res) => {
   res.json({ 
-    message: `It's working! 🙌`
+    message: `It"s working! 🙌`
   });
 });
 
-app.get("/get-all-tables", (req, res) => {
-  controllers.findAllTables(req, res);
-});
+// app.get("/get-menu-items", (req, res) => {
+//   controllers.getMenuItems(req, res);
+// });
+
+// app.get("/get-all-tables", (req, res) => {
+//   controllers.findAllTables(req, res);
+// });
  
 app.get("/get-table/:id", (req, res) => {
   controllers.findOneTable(req, res);
 });
 
-app.post('/add-table', (req, res) => {
-  controllers.addOneTable(req, res);
-});
+// app.post("/add-table", (req, res) => {
+//   controllers.addOneTable(req, res);
+// });
 
-app.post("/update-table/:id", (req, res) => {
-  controllers.updateOneTable(req, res);
-});
+// app.post("/update-table/:id", (req, res) => {
+//   controllers.updateOneTable(req, res);
+// });
 
-app.post("/delete-table/:id", (req, res) => {
-  controllers.deleteOneTable(req, res);
-});
+// app.post("/delete-table/:id", (req, res) => {
+//   controllers.deleteOneTable(req, res);
+// });
 
-app.post("/delete-all-tables", (req, res) => {
-  controllers.deleteAllTables(req, res);
-});
+// app.post("/delete-all-tables", (req, res) => {
+//   controllers.deleteAllTables(req, res);
+// });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -75,3 +118,18 @@ db.mongoose.connect(db.url, {
   console.log("MongoDB ❌", err);
   process.exit();
 });
+
+// (async() => {
+//   await start();  
+//   // console.log(tables);
+//   for (let x in tables) {
+//     for (let y in tables[x]) {
+//       // console.log(y);
+//       // console.log(tables[x]["table"]);
+//     }
+//     // axios.post("http://127.0.0.1:5050/add-table", tables[x])
+//     // .then(res => {
+//     //   console.log(res);
+//     // });
+//   }
+// })();

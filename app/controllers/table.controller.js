@@ -1,5 +1,6 @@
-const db = require('../models');
+const db = require("../models");
 const tables = db.tables;
+const fs = require("fs");
 
 // Create and Save a new table
 exports.addOneTable = (req, res) => {
@@ -10,13 +11,22 @@ exports.addOneTable = (req, res) => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not add the table');
+                res.status(400).send("❎ Could not add the table");
             }
         });
     } catch (err) {
         res.status(400).send(err);
     }
 };
+
+// exports.getMenuItems = (req, res) => {
+//     try {
+//         const menu_items = JSON.parse(fs.readFileSync("./app/data/menu_items/menu_items.json"));
+//         res.status(200).send(menu_items)
+//     } catch (err) {
+//         res.status(400).send(err);
+//     }
+// }
 
 // Retrieve all tables from the database
 exports.findAllTables = (req, res) => {
@@ -25,7 +35,7 @@ exports.findAllTables = (req, res) => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ No tables to show');
+                res.status(400).send("❎ No tables to show");
             }
         });
     } catch (err) {
@@ -36,11 +46,11 @@ exports.findAllTables = (req, res) => {
 // Find a single table with an id in the request
 exports.findOneTable = (req, res) => {
     try {
-        tables.find({ "id": req.params.id }).then(result => {
+        tables.find({ "parent": req.params.id }).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not find the table');
+                res.status(400).send("❎ Could not find the table");
             }
         });
     } catch (err) {
@@ -55,7 +65,7 @@ exports.updateOneTable = (req, res) => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not update the table');
+                res.status(400).send("❎ Could not update the table");
             }
         });
     } catch (err) {
@@ -70,7 +80,7 @@ exports.deleteOneTable = (req, res) => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not delete the table');
+                res.status(400).send("❎ Could not delete the table");
             }
         });
     } catch (err) {
@@ -87,7 +97,7 @@ exports.deleteAllTables = (req, res) => {
                     res.status(200).send(result);
                 }
             } else {
-                res.status(400).send('❎ Could not delete the table');
+                res.status(400).send("❎ Could not delete the table");
             }
         });
     } catch (err) {
