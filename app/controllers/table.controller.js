@@ -19,15 +19,6 @@ exports.addOneTable = (req, res) => {
     }
 };
 
-// exports.getMenuItems = (req, res) => {
-//     try {
-//         const menu_items = JSON.parse(fs.readFileSync("./app/data/menu_items/menu_items.json"));
-//         res.status(200).send(menu_items)
-//     } catch (err) {
-//         res.status(400).send(err);
-//     }
-// }
-
 // Retrieve all tables from the database
 exports.findAllTables = (req, res) => {
     try {

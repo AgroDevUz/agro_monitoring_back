@@ -69,37 +69,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.json({ 
-    message: `It"s working! 🙌`
+    message: `It's working! 🙌`
   });
 });
-
-// app.get("/get-menu-items", (req, res) => {
-//   controllers.getMenuItems(req, res);
-// });
-
-// app.get("/get-all-tables", (req, res) => {
-//   controllers.findAllTables(req, res);
-// });
  
 app.get("/get-table/:id", (req, res) => {
   controllers.findOneTable(req, res);
 });
-
-// app.post("/add-table", (req, res) => {
-//   controllers.addOneTable(req, res);
-// });
-
-// app.post("/update-table/:id", (req, res) => {
-//   controllers.updateOneTable(req, res);
-// });
-
-// app.post("/delete-table/:id", (req, res) => {
-//   controllers.deleteOneTable(req, res);
-// });
-
-// app.post("/delete-all-tables", (req, res) => {
-//   controllers.deleteAllTables(req, res);
-// });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
