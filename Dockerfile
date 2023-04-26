@@ -5,7 +5,7 @@ FROM node:16.13.1
 WORKDIR /app
 
 # Copy package.json and yarn.lock to the container
-COPY ../package.json ../yarn.lock ./
+COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN yarn install
